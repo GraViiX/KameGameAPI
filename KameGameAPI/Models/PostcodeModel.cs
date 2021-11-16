@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace KameGameAPI.Models
 {
-    public class CardTypeModel
+    public class PostcodeModel
     {
         [Key]
-        public int CardTypeId { get; set; }
+        public int PostcodeId { get; set; }
 
         [Required]
-        public string Type { get; set; }
+        public int Postcode { get; set; }
+
+        [Required]
+        public string City { get; set; }
     }
 }

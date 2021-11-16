@@ -17,11 +17,13 @@ namespace KameGameAPI.Database
         #endregion
 
         #region Dbsets
-        public DbSet<AddressModel> Addresses { get; set; }
+        public DbSet<AddressModel> addresses { get; set; }
         public DbSet<CardModel> cards { get; set; }
         public DbSet<CardTypeModel> cardTypes { get; set; }
         public DbSet<RoleModel> roles { get; set; }
         public DbSet<UserModel> users { get; set; }
+        public DbSet<ShopModel> shops { get; set; }
+        public DbSet<PostcodeModel> postcodes { get; set; }
         #endregion
     }
 }
