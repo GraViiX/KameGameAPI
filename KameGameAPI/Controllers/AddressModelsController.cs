@@ -62,6 +62,9 @@ namespace KameGameAPI.Controllers
             {
                 if (!AddressModelExists(id))
                 {
+                    //await PostAddressModel(addressModel);
+                    //await 
+                    //await PutUserModel(id, userModel);
                     return NotFound();
                 }
                 else

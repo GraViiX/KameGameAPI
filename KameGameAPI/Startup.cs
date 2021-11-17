@@ -1,4 +1,7 @@
 using KameGameAPI.Database;
+using KameGameAPI.Interfaces;
+using KameGameAPI.Repo;
+using KameGameAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,15 +38,19 @@ namespace KameGameAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "KameGameAPI", Version = "v1" });
             });
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
-            //services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<IUserRepositories, UserRepositories>();
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("CorsPolicy",
-            //        builder => builder.AllowAnyOrigin()
-            //            .AllowAnyMethod()
-            //            .AllowAnyHeader());
-            //});
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepo, UserRepo>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("kage",
+                builder =>
+                {
+                    builder.AllowAnyOrigin() // kan skrive port i stedet for
+                           .AllowAnyHeader()
+                           .AllowAnyMethod(); // kun get eller put mm.
+                });
+            });
 
         }
 
@@ -57,7 +64,7 @@ namespace KameGameAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KameGameAPI v1"));
             }
 
-            //app.UseCors();
+            app.UseCors("kage");
 
             app.UseHttpsRedirection();
 
