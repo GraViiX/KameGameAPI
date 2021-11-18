@@ -12,11 +12,11 @@ namespace KameGameAPI.DTOs
         public string UserName { get; set; }
         public string Email { get; set; }
         public int UTLF { get; set; }
-        public int CardId { get; set; }
+        public int? CardId { get; set; }
         public CardModel card { get; set; }
         public int RoleId { get; set; }
         public RoleModel role { get; set; }
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         public AddressModel address { get; set; }
     }
 }

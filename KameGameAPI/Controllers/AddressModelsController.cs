@@ -25,7 +25,7 @@ namespace KameGameAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AddressModel>>> Getaddresses()
         {
-            return await _context.addresses.ToListAsync();
+            return await _context.addresses.Include(h => h.postCode).ToListAsync();
         }
 
         // GET: api/AddressModels/5

@@ -8,6 +8,10 @@ namespace KameGameAPI.Interfaces
 {
     public interface IUserRepo
     {
+        Task<UserModel> GetUserRepo(int id);
+
         Task<UserModel> UserLoginRepo(string username, string password);
+
+        Task<UserModel> CreateUserRepo(UserModel user);
     }
 }

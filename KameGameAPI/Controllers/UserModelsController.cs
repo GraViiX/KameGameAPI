@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KameGameAPI.Database;
 using KameGameAPI.Models;
 using KameGameAPI.Interfaces;
+using KameGameAPI.DTOs;
 
 namespace KameGameAPI.Controllers
 {
@@ -90,6 +91,23 @@ namespace KameGameAPI.Controllers
         {
             return Ok(await _context.UserLoginService(user.UserName, user.UPassword));            
         }
+
+        [HttpPost("CreateUser")]
+        public async Task<ActionResult<UserResp>> CreateUser(UserModel user)
+        {
+            UserResp createUser = await _context.CreateUserService(user);
+
+            if (createUser == null)
+            {
+                return BadRequest("Username Taken");
+            }
+            else
+            {
+                return Ok(createUser);
+            }
+        }
+
+
 
 
         //// DELETE: api/UserModels/5
