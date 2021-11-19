@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KameGameAPI.Database;
 using KameGameAPI.Models;
+using KameGameAPI.Interfaces;
 
 namespace KameGameAPI.Controllers
 {
@@ -14,95 +15,109 @@ namespace KameGameAPI.Controllers
     [ApiController]
     public class PostcodeModelsController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        private readonly IPostCodeService _contextCustom;
 
-        public PostcodeModelsController(DatabaseContext context)
+        public PostcodeModelsController(IPostCodeService contextCustom)
         {
-            _context = context;
+            _contextCustom = contextCustom;
         }
+
 
         // GET: api/PostcodeModels
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PostcodeModel>>> Getpostcodes()
         {
-            return await _context.postcodes.ToListAsync();
+            return await _contextCustom.GetpostcodesService();
         }
 
-        // GET: api/PostcodeModels/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PostcodeModel>> GetPostcodeModel(int id)
-        {
-            var postcodeModel = await _context.postcodes.FindAsync(id);
+        //#region Scaffolded methods
 
-            if (postcodeModel == null)
-            {
-                return NotFound();
-            }
+        //private readonly DatabaseContext _context;
 
-            return postcodeModel;
-        }
+        //public PostcodeModelsController(DatabaseContext context)
+        //{
+        //    _context = context;
+        //}
 
-        // PUT: api/PostcodeModels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPostcodeModel(int id, PostcodeModel postcodeModel)
-        {
-            if (id != postcodeModel.PostcodeId)
-            {
-                return BadRequest();
-            }
+        
 
-            _context.Entry(postcodeModel).State = EntityState.Modified;
+        //// GET: api/PostcodeModels/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<PostcodeModel>> GetPostcodeModel(int id)
+        //{
+        //    var postcodeModel = await _context.postcodes.FindAsync(id);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PostcodeModelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    if (postcodeModel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    return postcodeModel;
+        //}
 
-        // POST: api/PostcodeModels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<PostcodeModel>> PostPostcodeModel(PostcodeModel postcodeModel)
-        {
-            _context.postcodes.Add(postcodeModel);
-            await _context.SaveChangesAsync();
+        //// PUT: api/PostcodeModels/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutPostcodeModel(int id, PostcodeModel postcodeModel)
+        //{
+        //    if (id != postcodeModel.PostcodeId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            return CreatedAtAction("GetPostcodeModel", new { id = postcodeModel.PostcodeId }, postcodeModel);
-        }
+        //    _context.Entry(postcodeModel).State = EntityState.Modified;
 
-        // DELETE: api/PostcodeModels/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePostcodeModel(int id)
-        {
-            var postcodeModel = await _context.postcodes.FindAsync(id);
-            if (postcodeModel == null)
-            {
-                return NotFound();
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!PostcodeModelExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            _context.postcodes.Remove(postcodeModel);
-            await _context.SaveChangesAsync();
+        //    return NoContent();
+        //}
 
-            return NoContent();
-        }
+        //// POST: api/PostcodeModels
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<PostcodeModel>> PostPostcodeModel(PostcodeModel postcodeModel)
+        //{
+        //    _context.postcodes.Add(postcodeModel);
+        //    await _context.SaveChangesAsync();
 
-        private bool PostcodeModelExists(int id)
-        {
-            return _context.postcodes.Any(e => e.PostcodeId == id);
-        }
+        //    return CreatedAtAction("GetPostcodeModel", new { id = postcodeModel.PostcodeId }, postcodeModel);
+        //}
+
+        //// DELETE: api/PostcodeModels/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeletePostcodeModel(int id)
+        //{
+        //    var postcodeModel = await _context.postcodes.FindAsync(id);
+        //    if (postcodeModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _context.postcodes.Remove(postcodeModel);
+        //    await _context.SaveChangesAsync();
+
+        //    return NoContent();
+        //}
+
+        //private bool PostcodeModelExists(int id)
+        //{
+        //    return _context.postcodes.Any(e => e.PostcodeId == id);
+        //}
+
+        //#endregion
     }
 }

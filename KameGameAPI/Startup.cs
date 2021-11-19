@@ -40,6 +40,8 @@ namespace KameGameAPI
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IPostCodeService, PostCodeService>();
+            services.AddScoped<IPostCodeRepo, PostCodeRepo>();
 
             services.AddCors(options =>
             {
