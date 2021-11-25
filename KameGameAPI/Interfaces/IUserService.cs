@@ -15,5 +15,6 @@ namespace KameGameAPI.Interfaces
         Task<int> UserLoginService(string username, string password);
 
         Task<UserResp> CreateUserService(UserModel user);
+        Task<ActionResult<UserModel>> UpdateUserService(int id, UserModel user);
     }
 }

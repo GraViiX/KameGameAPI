@@ -107,6 +107,12 @@ namespace KameGameAPI.Controllers
             }
         }
 
+        [HttpPost("UpdateUser/{id}")]
+        public async Task<ActionResult<UserModel>> PutUser(int id, UserModel user)
+        {
+            return await _context.UpdateUserService(id, user);
+        }
+
 
 
 

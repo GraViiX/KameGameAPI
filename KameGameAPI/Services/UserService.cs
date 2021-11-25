@@ -1,6 +1,7 @@
 ﻿using KameGameAPI.DTOs;
 using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,11 @@ namespace KameGameAPI.Services
                 AddressId = (int)createdUser.AddressId, address = createdUser.address 
             };
             return userResp;
+        }
+
+        public async Task<ActionResult<UserModel>> UpdateUserService(int id, UserModel user)
+        {
+            return await _context.UpdateUserRepo(id, user);
         }
     }
 }

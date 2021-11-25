@@ -20,10 +20,6 @@ namespace KameGameAPI.Models
 
         public int UTLF { get; set; }
 
-        [ForeignKey("CardModel.CardId")]
-        public int? CardId { get; set; }
-        public CardModel card { get; set; }
-
         [ForeignKey("RoleModel.RoleId")]
         public int RoleId { get; set; }
         public RoleModel role { get; set; }

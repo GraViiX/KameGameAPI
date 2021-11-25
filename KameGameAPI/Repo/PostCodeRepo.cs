@@ -21,7 +21,7 @@ namespace KameGameAPI.Repo
 
         public async Task<ActionResult<IEnumerable<PostcodeModel>>> GetpostcodesRepo()
         {
-            return await _context.postcodes.ToListAsync();
+            return await _context.postcodes.OrderBy(g => g.Postcode).ToListAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using KameGameAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace KameGameAPI.Interfaces
         Task<UserModel> UserLoginRepo(string username, string password);
 
         Task<UserModel> CreateUserRepo(UserModel user);
+
+        Task<ActionResult<UserModel>> UpdateUserRepo(int id, UserModel user);
     }
 }

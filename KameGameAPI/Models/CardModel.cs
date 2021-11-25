@@ -12,12 +12,16 @@ namespace KameGameAPI.Models
         [Key]
         public int CardId { get; set; }
 
+        [ForeignKey("UserModel.UserId")]
+        public int UserId { get; set; }
+        public UserModel user { get; set; }
+
         [ForeignKey("CardTypeModel.CardTypeId")]
         public int CardTypeId { get; set; }
         public CardTypeModel cardType { get; set; }
 
         [Required]
-        public int CardNumber { get; set; }
+        public string CardNumber { get; set; } 
 
         [Required]
         public string CardDate { get; set; }
