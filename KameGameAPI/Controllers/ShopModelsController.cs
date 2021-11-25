@@ -14,95 +14,95 @@ namespace KameGameAPI.Controllers
     [ApiController]
     public class ShopModelsController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        //private readonly DatabaseContext _context;
 
-        public ShopModelsController(DatabaseContext context)
-        {
-            _context = context;
-        }
+        //public ShopModelsController(DatabaseContext context)
+        //{
+        //    _context = context;
+        //}
 
-        // GET: api/ShopModels
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShopModel>>> Getshops()
-        {
-            return await _context.shops.ToListAsync();
-        }
+        //// GET: api/ShopModels
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<ShopModel>>> Getshops()
+        //{
+        //    return await _context.shops.ToListAsync();
+        //}
 
-        // GET: api/ShopModels/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ShopModel>> GetShopModel(int id)
-        {
-            var shopModel = await _context.shops.FindAsync(id);
+        //// GET: api/ShopModels/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<ShopModel>> GetShopModel(int id)
+        //{
+        //    var shopModel = await _context.shops.FindAsync(id);
 
-            if (shopModel == null)
-            {
-                return NotFound();
-            }
+        //    if (shopModel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return shopModel;
-        }
+        //    return shopModel;
+        //}
 
-        // PUT: api/ShopModels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutShopModel(int id, ShopModel shopModel)
-        {
-            if (id != shopModel.ShopId)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/ShopModels/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutShopModel(int id, ShopModel shopModel)
+        //{
+        //    if (id != shopModel.ShopId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(shopModel).State = EntityState.Modified;
+        //    _context.Entry(shopModel).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ShopModelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ShopModelExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/ShopModels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<ShopModel>> PostShopModel(ShopModel shopModel)
-        {
-            _context.shops.Add(shopModel);
-            await _context.SaveChangesAsync();
+        //// POST: api/ShopModels
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<ShopModel>> PostShopModel(ShopModel shopModel)
+        //{
+        //    _context.shops.Add(shopModel);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetShopModel", new { id = shopModel.ShopId }, shopModel);
-        }
+        //    return CreatedAtAction("GetShopModel", new { id = shopModel.ShopId }, shopModel);
+        //}
 
-        // DELETE: api/ShopModels/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteShopModel(int id)
-        {
-            var shopModel = await _context.shops.FindAsync(id);
-            if (shopModel == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/ShopModels/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteShopModel(int id)
+        //{
+        //    var shopModel = await _context.shops.FindAsync(id);
+        //    if (shopModel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.shops.Remove(shopModel);
-            await _context.SaveChangesAsync();
+        //    _context.shops.Remove(shopModel);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        private bool ShopModelExists(int id)
-        {
-            return _context.shops.Any(e => e.ShopId == id);
-        }
+        //private bool ShopModelExists(int id)
+        //{
+        //    return _context.shops.Any(e => e.ShopId == id);
+        //}
     }
 }

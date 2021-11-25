@@ -42,6 +42,8 @@ namespace KameGameAPI
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IPostCodeService, PostCodeService>();
             services.AddScoped<IPostCodeRepo, PostCodeRepo>();
+            services.AddScoped<ICardService, CardService>();
+            services.AddScoped<ICardRepo, CardRepo>();
 
             services.AddCors(options =>
             {
