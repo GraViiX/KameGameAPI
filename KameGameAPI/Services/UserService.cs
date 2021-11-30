@@ -18,9 +18,25 @@ namespace KameGameAPI.Services
             _context = context;
         }
 
-        public async Task<UserModel> GetUserService(int id)
+        public async Task<UserResp> GetUserService(int id)
         {
-            return await _context.GetUserRepo(id);
+            UserModel user = await _context.GetUserRepo(id);
+            if (user == null)
+            {
+                return null;
+            }
+            UserResp userResp = new UserResp()
+            {
+                UserId = user.UserId,
+                UserName = user.UserName,
+                Email = user.Email,
+                UTLF = user.UTLF,
+                RoleId = user.RoleId,
+                role = user.role,
+                AddressId = (int)user.AddressId,
+                address = user.address
+            };
+            return userResp;
         }
 
         public async Task<int> UserLoginService(string username, string password)

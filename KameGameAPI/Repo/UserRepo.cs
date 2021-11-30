@@ -21,7 +21,9 @@ namespace KameGameAPI.Repo
         public async Task<UserModel> GetUserRepo(int id)
         {
             var user = await _context.users.FindAsync(id);
-
+            var user1 = await _context.users.Include(h => h.role).OrderBy(g => g.RoleId).ToListAsync();
+            var user2 = await _context.users.Include(h => h.address).OrderBy(g => g.AddressId).ToListAsync();
+            var user3 = await _context.addresses.Include(h => h.postCode).OrderBy(g => g.PostCodeId).ToListAsync();
             return user;
         }
 
