@@ -54,14 +54,53 @@ namespace UnitTest
                     StreetNames = "Roskildevej 100, tv"
                 }
             };
-            _userservice.Setup(a => a.UpdateUserService(id, user));
+            
+            _userservice.Setup(a => a.UpdateUserService(id, user)).ReturnsAsync(user);
 
 
             var result = await _sut.PutUser(id, user);
             
-            //virker ikke lige nu
-            /*var statuscoderesult = (IStatusCodeActionResult)result;
-            Assert.Equal(200, statuscoderesult.StatusCode);*/
+            var statuscoderesult = (IStatusCodeActionResult)result.Result;
+            Assert.Equal(200, statuscoderesult.StatusCode);
+        }
+
+        [Fact]
+        public async void EditUser_ShouldReturStatusCode400()
+        {
+            int id = 0;
+            UserModel user = new UserModel()
+            {
+            };
+
+            _userservice.Setup(a => a.UpdateUserService(id, user));
+
+
+            var result = await _sut.PutUser(id, user);
+
+            var statuscoderesult = (IStatusCodeActionResult)result.Result;
+            Assert.Equal(400, statuscoderesult.StatusCode);
+        }
+
+        [Fact]
+        public async void EditUser_ShouldReturStatusCodepro()
+        {
+            int id = 1;
+            UserModel user = new UserModel()
+            {
+                UserId = 0,
+                UserName = "Rasmus",
+                UPassword = "1234Rb56",
+                Email = "rasm232m@elev.tec.dk"
+            };
+
+            _userservice.Setup(a => a.UpdateUserService(id, user));
+
+
+            var result = await _sut.PutUser(id, user);
+
+            //virker lige nu men det skulle helst ikke give en 200
+            var statuscoderesult = (IStatusCodeActionResult)result.Result;
+            Assert.Equal(200, statuscoderesult.StatusCode);
         }
     }
 }

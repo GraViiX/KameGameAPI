@@ -51,6 +51,9 @@ namespace KameGameAPI.Repo
 
         public async Task<ActionResult<UserModel>> UpdateUserRepo(int id, UserModel user)
         {
+            /*_context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return _context.users.Where(u => u.UserId == id).FirstOrDefault();*/
             if (id != user.UserId)
             {
                 return BadRequest();
