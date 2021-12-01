@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KameGameAPI.Database;
 using KameGameAPI.Models;
+using KameGameAPI.Interfaces;
 
 namespace KameGameAPI.Controllers
 {
@@ -14,6 +15,28 @@ namespace KameGameAPI.Controllers
     [ApiController]
     public class ShopModelsController : ControllerBase
     {
+        private readonly IShopService _context;
+
+        public ShopModelsController(IShopService context)
+        {
+            _context = context;
+        }
+
+        [HttpPost("SavePurchases")]
+        public async Task<ActionResult<ShopModel>> SavePurchases(List<ShopModel> basket)
+        {
+            List<ShopModel> shop = await _context.SavePurchasesService(basket);
+            if (shop == null)
+            {
+                return BadRequest();
+            }
+            else if(shop.Count >= 1)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
         //private readonly DatabaseContext _context;
 
         //public ShopModelsController(DatabaseContext context)

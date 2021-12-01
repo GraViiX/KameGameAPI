@@ -4,14 +4,16 @@ using KameGameAPI.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KameGameAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211130120702_FixedCard")]
+    partial class FixedCard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,9 +144,11 @@ namespace KameGameAPI.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Bought")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Bought")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
@@ -152,9 +156,17 @@ namespace KameGameAPI.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("cardModelCardId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("userModelUserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ShopId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("cardModelCardId");
+
+                    b.HasIndex("userModelUserId");
 
                     b.ToTable("shops");
                 });
@@ -225,13 +237,17 @@ namespace KameGameAPI.Migrations
 
             modelBuilder.Entity("KameGameAPI.Models.ShopModel", b =>
                 {
-                    b.HasOne("KameGameAPI.Models.UserModel", "user")
+                    b.HasOne("KameGameAPI.Models.CardModel", "cardModel")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("cardModelCardId");
 
-                    b.Navigation("user");
+                    b.HasOne("KameGameAPI.Models.UserModel", "userModel")
+                        .WithMany()
+                        .HasForeignKey("userModelUserId");
+
+                    b.Navigation("cardModel");
+
+                    b.Navigation("userModel");
                 });
 
             modelBuilder.Entity("KameGameAPI.Models.UserModel", b =>
