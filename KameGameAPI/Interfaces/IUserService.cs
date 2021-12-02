@@ -12,7 +12,7 @@ namespace KameGameAPI.Interfaces
     {
         Task<UserResp> GetUserService(int id);
 
-        Task<int> UserLoginService(string username, string password);
+        Task<LoginResponse> UserLoginService(string username, string password);
 
         Task<UserResp> CreateUserService(UserModel user);
         Task<ActionResult<UserModel>> UpdateUserService(int id, UserModel user);

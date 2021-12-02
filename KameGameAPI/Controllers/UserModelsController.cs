@@ -87,7 +87,7 @@ namespace KameGameAPI.Controllers
         //}
 
         [HttpPost("Login")]
-        public async Task<ActionResult<int>> Login(UserModel user)
+        public async Task<ActionResult<LoginResponse>> Login(UserModel user)
         {
             return Ok(await _context.UserLoginService(user.UserName, user.UPassword));            
         }
