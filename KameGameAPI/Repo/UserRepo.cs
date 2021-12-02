@@ -1,4 +1,5 @@
 ﻿using KameGameAPI.Database;
+using KameGameAPI.Encryption;
 using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace KameGameAPI.Repo
         {
             _context = context;
         }
+        SALT salt = new SALT();
 
         public async Task<UserModel> GetUserRepo(int id)
         {
@@ -29,7 +31,7 @@ namespace KameGameAPI.Repo
 
         public Task<UserModel> UserLoginRepo(string username, string password)
         {
-            return Task.FromResult(_context.users.Where(u => u.UserName == username && u.UPassword == password).FirstOrDefault());
+            return Task.FromResult(_context.users.Where(u => u.UserName == username && u.UPassword == Convert.ToBase64String(salt.GenerateSalt(password))).FirstOrDefault());
         }
 
         public async Task<UserModel> CreateUserRepo(UserModel user)
@@ -38,6 +40,8 @@ namespace KameGameAPI.Repo
             // get address id
             // parse address id into checkusername
             // Er ikke nødvendigt!
+
+            user.UPassword = Convert.ToBase64String(salt.GenerateSalt(user.UPassword));
 
             UserModel checkusername = await _context.users.FirstOrDefaultAsync(obj => obj.UserName == user.UserName);
             if (checkusername != null)
@@ -59,6 +63,12 @@ namespace KameGameAPI.Repo
                 return BadRequest();
             }
 
+            if (user.UPassword == "" || user.UPassword == null){ }
+            else
+            {
+                user.UPassword = Convert.ToBase64String(salt.GenerateSalt(user.UPassword));
+            }
+            
             _context.Entry(user).State = EntityState.Modified;
 
             try
