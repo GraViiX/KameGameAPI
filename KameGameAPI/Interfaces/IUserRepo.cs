@@ -16,5 +16,7 @@ namespace KameGameAPI.Interfaces
         Task<UserModel> CreateUserRepo(UserModel user);
 
         Task<ActionResult<UserModel>> UpdateUserRepo(int id, UserModel user);
+
+        Task<IActionResult> DeleteUserRepo(int id);
     }
 }

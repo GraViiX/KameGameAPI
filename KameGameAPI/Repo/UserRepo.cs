@@ -150,5 +150,19 @@ namespace KameGameAPI.Repo
             //return NoContent();
             #endregion
         }
+
+        public async Task<IActionResult> DeleteUserRepo(int id)
+        {
+            var userModel = await _context.users.FindAsync(id);
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            _context.users.Remove(userModel);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

@@ -94,5 +94,10 @@ namespace KameGameAPI.Services
         {
             return await _context.UpdateUserRepo(id, user);
         }
+
+        public async Task<IActionResult> DeleteUserService(int id)
+        {
+            return await _context.DeleteUserRepo(id);
+        }
     }
 }

@@ -127,7 +127,6 @@ namespace KameGameAPI.Controllers
             }
         }
 
-
         [HttpGet("GetUser/{id}")]
         public async Task<ActionResult<UserResp>> GetUserById(int id)
         {
@@ -150,21 +149,12 @@ namespace KameGameAPI.Controllers
                 return Problem(e.Message);
             }
         }
-        //// DELETE: api/UserModels/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteUserModel(int id)
-        //{
-        //    var userModel = await _context.users.FindAsync(id);
-        //    if (userModel == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.users.Remove(userModel);
-        //    await _context.SaveChangesAsync();
-
-        //    return NoContent();
-        //}
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            return await _context.DeleteUserService(id);
+        }
 
         //private bool UserModelExists(int id)
         //{
