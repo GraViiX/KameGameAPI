@@ -151,7 +151,7 @@ namespace KameGameAPI.Repo
             #endregion
         }
 
-        public async Task<IActionResult> DeleteUserRepo(int id)
+        public async Task<ActionResult> DeleteUserRepo(int id)
         {
             var userModel = await _context.users.FindAsync(id);
             if (userModel == null)
