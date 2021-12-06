@@ -23,9 +23,14 @@ namespace UnitTest
             _sut = new UserModelsController(_userservice.Object);
         }
 
+        //Arrange
+        //Act
+        //Assert
+
         [Fact]
         public async void EditUser_ShouldReturStatusCode200()
         {
+            //Arrange
             int id = 1;
             UserModel user = new UserModel()
             {
@@ -54,12 +59,14 @@ namespace UnitTest
                     StreetNames = "Roskildevej 100, tv"
                 }
             };
-            
+
+            // Interface niveau
             _userservice.Setup(a => a.UpdateUserService(id, user)).ReturnsAsync(user);
 
-
+            //Act
             var result = await _sut.PutUser(id, user);
-            
+
+            //Assert - Controller niveau
             var statuscoderesult = (IStatusCodeActionResult)result.Result;
             Assert.Equal(200, statuscoderesult.StatusCode);
         }
@@ -68,9 +75,7 @@ namespace UnitTest
         public async void EditUser_ShouldReturStatusCode400()
         {
             int id = 0;
-            UserModel user = new UserModel()
-            {
-            };
+            UserModel user = new();
 
             _userservice.Setup(a => a.UpdateUserService(id, user));
 
@@ -81,26 +86,5 @@ namespace UnitTest
             Assert.Equal(400, statuscoderesult.StatusCode);
         }
 
-        [Fact]
-        public async void EditUser_ShouldReturStatusCodepro()
-        {
-            int id = 1;
-            UserModel user = new UserModel()
-            {
-                UserId = 0,
-                UserName = "Rasmus",
-                UPassword = "1234Rb56",
-                Email = "rasm232m@elev.tec.dk"
-            };
-
-            _userservice.Setup(a => a.UpdateUserService(id, user));
-
-
-            var result = await _sut.PutUser(id, user);
-
-            //virker lige nu men det skulle helst ikke give en 200
-            var statuscoderesult = (IStatusCodeActionResult)result.Result;
-            Assert.Equal(200, statuscoderesult.StatusCode);
-        }
     }
 }
