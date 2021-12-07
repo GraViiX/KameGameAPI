@@ -89,7 +89,20 @@ namespace KameGameAPI.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<LoginResponse>> Login(UserModel user)
         {
-            return Ok(await _context.UserLoginService(user.UserName, user.UPassword));            
+            try
+            {
+                if (user.UPassword == "" || user.UserName == "")
+                {
+                    return BadRequest();
+                }
+                
+                return Ok(await _context.UserLoginService(user.UserName, user.UPassword));
+            }
+            catch (Exception e)
+            {
+
+                return Problem(e.Message);
+            }  
         }
 
         [HttpPost("CreateUser")]
@@ -97,13 +110,21 @@ namespace KameGameAPI.Controllers
         {
             UserResp createUser = await _context.CreateUserService(user);
 
-            if (createUser == null)
+            try
             {
-                return BadRequest("Username Taken");
+                if (createUser == null)
+                {
+                    return BadRequest("Username Taken");
+                }
+                else
+                {
+                    return Ok(createUser);
+                }
             }
-            else
+            catch (Exception e)
             {
-                return Ok(createUser);
+
+                return Problem(e.Message);
             }
         }
 
@@ -127,28 +148,28 @@ namespace KameGameAPI.Controllers
             }
         }
 
-        [HttpGet("GetUser/{id}")]
-        public async Task<ActionResult<UserResp>> GetUserById(int id)
-        {
-            try
-            {
-                if (await _context.GetUserService(id) == null)
-                {
-                    return BadRequest("User doesn't exist");
-                }
-                else
-                {
-                    return Ok(await _context.GetUserService(id));
-                }
+        //[HttpGet("GetUser/{id}")]
+        //public async Task<ActionResult<UserResp>> GetUserById(int id)
+        //{
+        //    try
+        //    {
+        //        if (await _context.GetUserService(id) == null)
+        //        {
+        //            return BadRequest("User doesn't exist");
+        //        }
+        //        else
+        //        {
+        //            return Ok(await _context.GetUserService(id));
+        //        }
 
                
-            }
-            catch (Exception e)
-            {
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                return Problem(e.Message);
-            }
-        }
+        //        return Problem(e.Message);
+        //    }
+        //}
         
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)

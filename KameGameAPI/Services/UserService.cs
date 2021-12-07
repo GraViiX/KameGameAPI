@@ -69,7 +69,7 @@ namespace KameGameAPI.Services
             var token = tokenHandler.CreateToken(tokenDescriptor); // Her bliver selve min token genereret og gjort klar til at blive sendt til brugeren
 
             //Return token
-            return new LoginResponse() { token = tokenHandler.WriteToken(token) }; // her skrives token og sendt til brugeren.
+            return  new LoginResponse() { token = tokenHandler.WriteToken(token) }; // her skrives token og sendt til brugeren.
             
         }
 
