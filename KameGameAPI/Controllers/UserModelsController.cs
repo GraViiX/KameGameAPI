@@ -174,7 +174,20 @@ namespace KameGameAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            return Ok(await _context.DeleteUserService(id));
+            try
+            {
+                UserModel createUser = await _context.DeleteUserService(id);
+                if(createUser == null)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return Problem(e.Message);
+            }
+            
         }
 
         //private bool UserModelExists(int id)

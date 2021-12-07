@@ -165,7 +165,7 @@ namespace UnitTest
             _userservice.Setup(a => a.CreateUserService(user)).ReturnsAsync(create);
 
             //Act
-            var result = await _sut.Login(user);
+            var result = await _sut.CreateUser(user);
 
             //Assert - Controller niveau
             var statuscoderesult = (IStatusCodeActionResult)result.Result;
@@ -173,20 +173,45 @@ namespace UnitTest
         }
 
         [Fact]
-        public async void Create_ShouldReturStatusCode500()
+        public async void Create_ShouldReturStatusCode400()
         {
             //Arrange
             UserModel user = new UserModel();
-            UserResp create = new UserResp();
             // Interface niveau
-            _userservice.Setup(a => a.CreateUserService(user)).ReturnsAsync(create);
+            _userservice.Setup(a => a.CreateUserService(user)).ReturnsAsync(() => null);
 
             //Act
-            var result = await _sut.Login(user = null);
+            var result = await _sut.CreateUser(user);
 
             //Assert - Controller niveau
             var statuscoderesult = (IStatusCodeActionResult)result.Result;
-            Assert.Equal(500, statuscoderesult.StatusCode);
+            Assert.Equal(400, statuscoderesult.StatusCode);
+        }
+
+        [Fact]
+        public async void Delete_FoundUser()
+        {
+            UserModel user = new UserModel();
+            int id = 12;
+            _userservice.Setup(a => a.DeleteUserService(id)).ReturnsAsync(user);
+            var result = await _sut.DeleteUser(id);
+
+            var statusCodeResult = (IStatusCodeActionResult)result;
+
+            Assert.Equal(200, statusCodeResult.StatusCode);
+        }
+
+        [Fact]
+        public async void Delete_NotFoundUser()
+        {
+            UserModel user = new UserModel();
+            int id = 12;
+            _userservice.Setup(a => a.DeleteUserService(id)).ReturnsAsync(()=> null);
+            var result = await _sut.DeleteUser(id);
+
+            var statusCodeResult = (IStatusCodeActionResult)result;
+
+            Assert.Equal(404, statusCodeResult.StatusCode);
         }
     }
 }
