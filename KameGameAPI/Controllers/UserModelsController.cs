@@ -148,29 +148,29 @@ namespace KameGameAPI.Controllers
             }
         }
 
-        //[HttpGet("GetUser/{id}")]
-        //public async Task<ActionResult<UserResp>> GetUserById(int id)
-        //{
-        //    try
-        //    {
-        //        if (await _context.GetUserService(id) == null)
-        //        {
-        //            return BadRequest("User doesn't exist");
-        //        }
-        //        else
-        //        {
-        //            return Ok(await _context.GetUserService(id));
-        //        }
+        [HttpGet("GetUser/{id}")]
+        public async Task<ActionResult<UserResp>> GetUserById(int id)
+        {
+            try
+            {
+                if (await _context.GetUserService(id) == null)
+                {
+                    return BadRequest("User doesn't exist");
+                }
+                else
+                {
+                    return Ok(await _context.GetUserService(id));
+                }
 
-               
-        //    }
-        //    catch (Exception e)
-        //    {
 
-        //        return Problem(e.Message);
-        //    }
-        //}
-        
+            }
+            catch (Exception e)
+            {
+
+                return Problem(e.Message);
+            }
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
