@@ -25,16 +25,24 @@ namespace KameGameAPI.Controllers
         [HttpPost("SavePurchases")]
         public async Task<ActionResult<ShopModel>> SavePurchases(List<ShopModel> basket)
         {
-            List<ShopModel> shop = await _context.SavePurchasesService(basket);
-            if (shop == null)
+            try
             {
-                return BadRequest();
-            }
-            else if(shop.Count >= 1)
-            {
+                List<ShopModel> shop = await _context.SavePurchasesService(basket);
+                if (shop == null)
+                {
+                    return BadRequest();
+                }
+                else if (shop.Count == 0)
+                {
+                    return NoContent();
+                }                
                 return Ok();
             }
-            return NotFound();
+            catch (Exception e)
+            {
+                return Problem(e.Message);
+            }
+            
         }
 
         //private readonly DatabaseContext _context;
