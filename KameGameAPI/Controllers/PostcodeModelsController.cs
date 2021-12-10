@@ -33,7 +33,7 @@ namespace KameGameAPI.Controllers
                 {
                     return Problem();
                 }
-                return Ok(await _contextCustom.GetpostcodesService());
+                return await _contextCustom.GetpostcodesService();
             }
             catch (Exception e)
             {
