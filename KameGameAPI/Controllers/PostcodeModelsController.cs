@@ -27,7 +27,18 @@ namespace KameGameAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PostcodeModel>>> Getpostcodes()
         {
-            return await _contextCustom.GetpostcodesService();
+            try
+            {
+                if (await _contextCustom.GetpostcodesService() == null)
+                {
+                    return Problem();
+                }
+                return Ok(await _contextCustom.GetpostcodesService());
+            }
+            catch (Exception e)
+            {
+                return Problem(e.Message);
+            }
         }
 
         //#region Scaffolded methods
